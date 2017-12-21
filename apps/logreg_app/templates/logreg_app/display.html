@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'logreg_app/styles.css' %}" media="screen" title="no title"  charset="utf-8">
+    <title>Exam</title>
+</head>
+<style>
+    div{
+        overflow-y: scroll;
+        border: 2px solid black;
+        display: inline-block;
+        height: 200px;
+    }
+</style>
+<body>
+    <a href="/logout">Logout</a>
+    <h1>Welcome, {{request.session.name}}!</h1>
+    <h3>My Wish List</h3>
+    <table>
+        <thead>           
+            <tr>
+                <td>Item</td>
+                <td>Added By</td>
+                <td>Date Added</td>
+                <td>Action</td>
+            </tr>           
+        </thead>
+        <tbody>
+            {% for wish in wishes %}
+            <tr>
+                <td><a href="/info/{{wish.id}}">{{wish.item}}</a></td>
+                <td>{{wish.created_by.name}}</td>
+                <td>{{wish.date_added}}</td>
+                <td><a href="/leave/{{wish.id}}">Remove from My Wish List</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Other User's Wish Lists</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Item</td>
+                <td>Added By</td>
+                <td>Date Added</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wish in other_wishes %}
+            <tr>
+                <td><a href="/info/{{wish.id}}">{{wish.item}}</a></td>
+                <td>{{wish.created_by.name}}</td>
+                <td>{{wish.date_added}}</td>
+                <td><a href="/join/{{wish.id}}">Add to My Wish List</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/new"><button>Add Item</button></a>
+</body>
+
+</html>
